@@ -1,0 +1,277 @@
+{
+  "info": {
+    "name": "Library Management Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/auth/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "email": "admin@library.com",
+                "password": "admin123"
+              }
+            }
+          }
+        },
+        {
+          "name": "User Login",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/auth/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "email": "user@library.com",
+                "password": "user123"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Book Management (Admin)",
+      "item": [
+        {
+          "name": "Get All Books",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/books",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Add New Book",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/books",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "title": "Test Book",
+                "author": "Test Author",
+                "ISBN": "123-4567890123",
+                "publicationYear": 2023,
+                "language": "English",
+                "category": "fiction",
+                "available": true
+              }
+            }
+          }
+        },
+        {
+          "name": "Edit Book",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/books/{{bookId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "title": "Updated Book Title",
+                "author": "Updated Author"
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Book",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/api/books/{{bookId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Book Catalog (User)",
+      "item": [
+        {
+          "name": "Search Books by Title",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/books?title=Great",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Get Book Details",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/books/{{bookId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Borrow Book",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/api/loans",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "bookId": "{{bookId}}"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. User Management (Admin)",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/admin/users",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Edit User",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/admin/users/{{userId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "name": "Updated User Name",
+                "email": "updated@email.com"
+              }
+            }
+          }
+        },
+        {
+          "name": "Get Statistics",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/admin/stats/loans",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. User Profile",
+      "item": [
+        {
+          "name": "Get User Loans",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/api/loans/user/{{userId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Return Book",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/api/loans/{{loanId}}/return",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
